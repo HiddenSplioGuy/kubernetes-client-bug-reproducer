@@ -1,0 +1,65 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url "https://packages.confluent.io/maven/"
+        }
+        maven {
+            url = uri("https://jitpack.io")
+        }
+    }
+}
+
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id 'jacoco'
+    // Linter and code quality check
+    id "com.diffplug.spotless" version "6.0.4"
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url 'https://packages.confluent.io/maven/'
+    }
+}
+
+dependencies {
+    implementation 'io.quarkus:quarkus-kubernetes-client'
+
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+
+    implementation 'io.quarkiverse.operatorsdk:quarkus-operator-sdk:4.0.4'
+    annotationProcessor 'io.quarkiverse.operatorsdk:quarkus-operator-sdk:4.0.4'
+    implementation "io.quarkiverse.operatorsdk:quarkus-operator-sdk-csv-generator:3.0.9"
+    annotationProcessor "io.quarkiverse.operatorsdk:quarkus-operator-sdk-csv-generator:3.0.9"
+    implementation 'io.quarkiverse.operatorsdk:quarkus-operator-sdk-bom:4.0.4'
+    annotationProcessor 'io.quarkiverse.operatorsdk:quarkus-operator-sdk-bom:4.0.4'
+
+    // LOMBOK
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+
+group 'com.bug'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+

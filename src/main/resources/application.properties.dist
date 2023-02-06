@@ -1,0 +1,4 @@
+################################ Configure Quarkus
+quarkus.application.name=kubernetes-client-bug-reproducer
+################################
+
